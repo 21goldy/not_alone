@@ -1,0 +1,54 @@
+name: not_alone
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.4.0
+  flutter_secure_storage: ^7.0.1
+  cloud_firestore: ^4.3.0
+  firebase_auth: ^4.2.3
+  modal_progress_hud_nsn: ^0.3.0
+  location: ^4.4.0
+  geocoding: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+#  assets:
+#    - add assets over here
+
+  fonts:
+    - family: Montserrat-Bold
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
+
+    - family: Montserrat-Medium
+      fonts:
+        - asset: fonts/Montserrat-Medium.ttf
+
+    - family: Satisfy
+      fonts:
+        - asset: fonts/Satisfy-Regular.ttf
+
+    - family: Ubuntu-Medium
+      fonts:
+        - asset: fonts/Ubuntu-Medium.ttf
