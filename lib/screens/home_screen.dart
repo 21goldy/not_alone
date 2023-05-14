@@ -25,8 +25,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Telephony telephony = Telephony.instance;
 
-  final restaurants = [''];
-
   Location location = Location();
   late LocationData locationData;
   String _address = '';
@@ -109,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
     String apiKey = "";
     String radius = "10000";
 
-    // Use nearby-search to get the list of nearby places based on the latitude and longitude
     var url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&keyword=hotel&key=$apiKey');
 
@@ -118,38 +115,28 @@ class _HomeScreenState extends State<HomeScreen> {
     NearbyPlacesResponse nearbyPlacesResponse =
         NearbyPlacesResponse.fromJson(jsonDecode(response.body));
 
-    // Extract the place_id from the response
     List<String> placeIds = [];
     nearbyPlacesResponse.results?.forEach((element) {
       placeIds.add(element.placeId.toString());
     });
 
-    // Loop all place_ids to get the contact details of the places
     for (int i = 0; i < placeIds.length; i++) {
       var url = Uri.parse(
           'https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeIds[i]}&key=$apiKey');
 
       var response = await http.post(url);
 
-      // Parse the response body into a JSON object
       var data = jsonDecode(response.body);
 
       if (data.containsKey('result') &&
           data['result'].containsKey('formatted_phone_number')) {
-        // Access the formatted_phone_number
         var contact = data['result']['formatted_phone_number'];
-        // print(contact);
 
         phoneNumbers.add(contact);
       } else {
         print("No contact found");
       }
     }
-
-    // Send the phone numbers to the messageThePhoneNumbers function
-    // Using test phone numbers when in debug mode
-    // messageThePhoneNumbers(
-    //     isInDebugMode ? ["7877944392"] : phoneNumbers, latitude, longitude);
 
     setState(() {});
   }
@@ -184,12 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () async {
+                        getLocation();
                         try {
                           await FirebaseFirestore.instance
                               .collection('User')
-                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .doc(FirebaseAuth.instance.currentUser?.email)
                               .collection('locations')
                               .add({
+                            'uID': FirebaseAuth.instance.currentUser?.uid,
                             'address': _address,
                             'time': FieldValue.serverTimestamp(),
                           });
