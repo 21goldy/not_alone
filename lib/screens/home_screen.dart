@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:not_alone/constants.dart';
+import 'package:not_alone/screens/account_page.dart';
 import 'package:telephony/telephony.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:not_alone/screens/help_screen.dart';
@@ -165,8 +166,18 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(left: 20),
             child: SafeArea(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  const Center(
+                    child: Text(
+                      'Send Emergency Message',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Bold',
+                        fontSize: 35,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
@@ -227,13 +238,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'Help',
                             style: TextStyle(
-                              fontSize: 25.0,
-                            ),
+                                fontSize: 25.0, fontFamily: 'Ubuntu-Medium'),
                           ),
                         ),
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.info_outline,
+                            color: Colors.white,
+                            size: 20.0,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AccountPage()),
+                            );
+                          },
+                        ),
+                        const Text(
+                          'Note: On clicking this help button we will send your current \nlocation to nearby help and your selected contact members!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Ubuntu-Medium',
+                            fontSize: 11.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

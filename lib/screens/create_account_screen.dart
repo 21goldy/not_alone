@@ -107,7 +107,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 });
                               }
                             },
-                            textColor: Colors.deepPurple,
                             fontSize: 18.0),
                       )
                     ],

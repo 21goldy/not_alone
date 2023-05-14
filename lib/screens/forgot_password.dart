@@ -21,88 +21,80 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: Scaffold(
-        body: Container(
-          decoration: kBoxDecoration,
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 150,
-                    ),
-                    const Center(
-                      child: Text(
-                        'Reset Password',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Montserrat-Bold',
-                          fontSize: 35,
-                        ),
+      child: Container(
+        decoration: kBoxDecoration,
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 150,
+                  ),
+                  const Center(
+                    child: Text(
+                      'Reset Password',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Bold',
+                        fontSize: 35,
                       ),
                     ),
-                    const SizedBox(
-                      height: 50,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: LoginFields(
+                      formHintText: 'Enter Your Email',
+                      formPrefixIcon: Icons.email,
+                      obscureText: false,
+                      onChanged: (val) {
+                        setState(() {
+                          email = val;
+                        });
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: LoginFields(
-                        formHintText: 'Enter Your Email',
-                        formPrefixIcon: Icons.email,
-                        obscureText: false,
-                        onChanged: (val) {
+                  ),
+                  const SizedBox(
+                    height: 13,
+                  ),
+                  Center(
+                    child: RoundedButton(
+                        title: 'Send Reset Link',
+                        color: Colors.white,
+                        onPressed: () async {
                           setState(() {
-                            email = val;
+                            showSpinner = true;
                           });
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 13,
-                    ),
-                    Center(
-                      child: RoundedButton(
-                          title: 'Send Reset Link',
-                          color: Colors.white,
-                          onPressed: () async {
+                          try {
+                            await _auth.sendPasswordResetEmail(
+                              email: email,
+                            );
+
+                            // print('sent');
                             setState(() {
-                              showSpinner = true;
+                              showSpinner = false;
                             });
-                            try {
-                              await _auth.sendPasswordResetEmail(
-                                email: email,
-                              );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Oops! Some error occurred.'),
+                            ));
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Reset link sent!'),
-                              ));
-
-                              // print('sent');
-                              setState(() {
-                                showSpinner = false;
-                              });
-                            } catch (e) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Oops! Some error occurred.'),
-                              ));
-
-                              setState(() {
-                                showSpinner = false;
-                              });
-                            }
-                          },
-                          textColor: Colors.deepPurple,
-                          fontSize: 18.0),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          }
+                        },
+                        fontSize: 18.0),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

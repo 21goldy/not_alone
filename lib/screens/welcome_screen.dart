@@ -53,7 +53,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             builder: (context) => const LoginScreen()),
                       );
                     },
-                    textColor: Colors.deepPurple,
                     fontSize: 18.0),
               )
             ],

@@ -6,13 +6,11 @@ class RoundedButton extends StatelessWidget {
       required this.title,
       required this.color,
       required this.onPressed,
-      required this.textColor,
       required this.fontSize})
       : super(key: key);
 
   final Color color;
   final String title;
-  final Color textColor;
   final double fontSize;
   final VoidCallback onPressed;
 
@@ -32,7 +30,7 @@ class RoundedButton extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              color: textColor,
+              color: Colors.black87,
               fontSize: fontSize,
             ),
           ),

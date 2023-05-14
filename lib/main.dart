@@ -9,7 +9,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(
-      MaterialApp(debugShowCheckedModeBanner: false, home: const NotAlone()));
+      const MaterialApp(debugShowCheckedModeBanner: false, home: NotAlone()));
 }
 
 class NotAlone extends StatelessWidget {

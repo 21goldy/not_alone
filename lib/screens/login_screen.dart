@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -100,8 +99,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   showSpinner = true;
                                 });
                                 try {
+                                  const secureStorage = FlutterSecureStorage();
+
                                   await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
+
+                                  final User? user = _auth.currentUser;
+
+                                  await secureStorage.write(
+                                      key: 'uid', value: user?.uid);
 
                                   Navigator.popUntil(context,
                                       ModalRoute.withName('/welcome_screen'));
@@ -121,7 +127,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 }
                               },
-                              textColor: Colors.deepPurple,
                               fontSize: 18.0),
                         )
                       ],
@@ -141,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             'Create New Account',
                             style: TextStyle(
-                                color: Colors.black38, fontSize: 13.0),
+                                color: Colors.white,
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.w300),
                           ),
                         ),
                         TextButton(
@@ -156,7 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text(
                               'Forgot Password?',
                               style: TextStyle(
-                                  color: Colors.black38, fontSize: 13.0),
+                                  color: Colors.white,
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.w300),
                             ))
                       ],
                     ),

@@ -5,7 +5,10 @@ BoxDecoration kBoxDecoration = BoxDecoration(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.deepPurple,
-    Colors.deepPurple.shade100,
+    Colors.black54,
+    Colors.white12,
   ],
 ));
+
+// Colors.deepPurple,
+// Colors.deepPurple.shade100,
