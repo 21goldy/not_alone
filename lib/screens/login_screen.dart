@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:not_alone/constants.dart';
 import 'package:not_alone/screens/create_account_screen.dart';
+import 'package:not_alone/screens/forgot_password.dart';
 import 'package:not_alone/screens/home_screen.dart';
 import 'package:not_alone/components/login_fields.dart';
 import 'package:not_alone/components/rounded_button.dart';
@@ -101,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 try {
                                   await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
+
                                   Navigator.popUntil(context,
                                       ModalRoute.withName('/welcome_screen'));
                                   Navigator.push(
@@ -114,7 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     showSpinner = false;
                                   });
                                 } catch (e) {
-                                  print(e);
                                   setState(() {
                                     showSpinner = false;
                                   });
@@ -144,7 +145,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPassword()),
+                              );
+                            },
                             child: const Text(
                               'Forgot Password?',
                               style: TextStyle(

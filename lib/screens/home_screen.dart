@@ -1,10 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:not_alone/components/rounded_button.dart';
-import 'package:not_alone/constants.dart';
 import 'package:location/location.dart';
+import 'package:http/http.dart' as http;
+import 'package:not_alone/constants.dart';
+import 'package:telephony/telephony.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:not_alone/screens/help_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
+import 'package:not_alone/model/nearby_response.dart' hide Location;
+
+double? latitude = 0;
+double? longitude = 0;
+List<String> phoneNumbers = [];
+bool isDebug = true;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,11 +23,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Telephony telephony = Telephony.instance;
+
+  final restaurants = [''];
+
   Location location = Location();
   late LocationData locationData;
   String _address = '';
-  double? latitude = 0;
-  double? longitude = 0;
   bool showAddress = false;
 
   void getLocationPermission() async {
@@ -94,6 +105,61 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void getNearbyPlacesContacts(double latitude, double longitude) async {
+    String apiKey = "";
+    String radius = "10000";
+
+    // Use nearby-search to get the list of nearby places based on the latitude and longitude
+    var url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&keyword=hotel&key=$apiKey');
+
+    var response = await http.post(url);
+
+    NearbyPlacesResponse nearbyPlacesResponse =
+        NearbyPlacesResponse.fromJson(jsonDecode(response.body));
+
+    // Extract the place_id from the response
+    List<String> placeIds = [];
+    nearbyPlacesResponse.results?.forEach((element) {
+      placeIds.add(element.placeId.toString());
+    });
+
+    // Loop all place_ids to get the contact details of the places
+    for (int i = 0; i < placeIds.length; i++) {
+      var url = Uri.parse(
+          'https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeIds[i]}&key=$apiKey');
+
+      var response = await http.post(url);
+
+      // Parse the response body into a JSON object
+      var data = jsonDecode(response.body);
+
+      if (data.containsKey('result') &&
+          data['result'].containsKey('formatted_phone_number')) {
+        // Access the formatted_phone_number
+        var contact = data['result']['formatted_phone_number'];
+        // print(contact);
+
+        phoneNumbers.add(contact);
+      } else {
+        print("No contact found");
+      }
+    }
+
+    // Send the phone numbers to the messageThePhoneNumbers function
+    // Using test phone numbers when in debug mode
+    // messageThePhoneNumbers(
+    //     isInDebugMode ? ["7877944392"] : phoneNumbers, latitude, longitude);
+
+    setState(() {});
+  }
+
+  void getHelp() {
+    getLocation();
+    getNearbyPlacesContacts(latitude!, longitude!);
+    print(phoneNumbers);
+  }
+
   @override
   void initState() {
     getLocationPermission();
@@ -114,51 +180,69 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Center(
-                    child: Text(
-                      'Home Screen',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Montserrat-Bold',
-                        fontSize: 35,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    width: 150.0,
-                    child: RoundedButton(
-                        title: 'Help',
-                        color: Colors.redAccent,
-                        onPressed: () {
-                          try {
-                            FirebaseFirestore.instance
-                                .collection('User')
-                                .doc(FirebaseAuth.instance.currentUser?.uid)
-                                .collection('locations')
-                                .add({
-                              'address': _address,
-                              'time': FieldValue.serverTimestamp(),
-                            });
-                          } catch (e) {
-                            print(e);
-                          }
-                          setState(() {
-                            showAddress = true;
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('User')
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .collection('locations')
+                              .add({
+                            'address': _address,
+                            'time': FieldValue.serverTimestamp(),
                           });
-                        },
-                        textColor: Colors.white,
-                        fontSize: 20),
-                  ),
-                  Visibility(
-                    visible: showAddress,
-                    child: Column(
-                      children: [
-                        Text(_address),
-                        Text('Latitude: $latitude, Longitude: $longitude'),
-                      ],
+
+                          bool? permissionsGranted =
+                              await telephony.requestPhoneAndSmsPermissions;
+
+                          if (permissionsGranted == true) {
+                            if (isDebug) {
+                              telephony.sendSms(
+                                  to: "9893852948",
+                                  message:
+                                      "Please Help... This is an emergency! My location https://maps.google.com/maps?q=$latitude,$longitude");
+                            } else {
+                              phoneNumbers.forEach((element) {
+                                telephony.sendSms(
+                                    to: element,
+                                    message:
+                                        "Sorry, this is a test message by our team for an SOS app that we are currently working on. \nThis is an emergency! My location https://maps.google.com/maps?q=$latitude,$longitude");
+                              });
+                            }
+                          } else {
+                            print("Can't send messages!");
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HelpScreen()),
+                          );
+                        } catch (e) {
+                          print(e);
+                        }
+                        setState(() {
+                          showAddress = true;
+                        });
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        width: 180.0,
+                        height: 180.0,
+                        child: const Center(
+                          child: Text(
+                            'Help',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
