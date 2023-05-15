@@ -14,6 +14,7 @@ import 'package:not_alone/model/nearby_response.dart' hide Location;
 double? latitude = 0;
 double? longitude = 0;
 List<String> phoneNumbers = [];
+List<dynamic> myContacts = [];
 bool isDebug = true;
 
 class HomeScreen extends StatefulWidget {
@@ -148,10 +149,33 @@ class _HomeScreenState extends State<HomeScreen> {
     print(phoneNumbers);
   }
 
+  getMyContacts() {
+    FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        future: FirebaseFirestore.instance
+            .collection('User')
+            .doc(FirebaseAuth.instance.currentUser?.email)
+            .get(),
+        builder: (BuildContext context, dataShots) {
+          if (dataShots.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          }
+          if (dataShots.hasData) {
+            myContacts = dataShots.data?.get('myContacts');
+          }
+          return Container();
+        });
+  }
+
   @override
   void initState() {
     getLocationPermission();
     getLocation();
+    getMyContacts();
     super.initState();
   }
 
@@ -209,6 +233,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     to: element,
                                     message:
                                         "Sorry, this is a test message by our team for an SOS app that we are currently working on. \nThis is an emergency! My location https://maps.google.com/maps?q=$latitude,$longitude");
+                              });
+                              myContacts.forEach((element) {
+                                telephony.sendSms(
+                                    to: element,
+                                    message:
+                                        "Please Help... This is an emergency! My location https://maps.google.com/maps?q=$latitude,$longitude");
                               });
                             }
                           } else {

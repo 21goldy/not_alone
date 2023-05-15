@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:not_alone/components/login_fields.dart';
@@ -89,6 +90,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               try {
                                 await _auth.createUserWithEmailAndPassword(
                                     email: email, password: password);
+
+                                FirebaseFirestore.instance
+                                    .collection('User')
+                                    .doc(FirebaseAuth
+                                        .instance.currentUser?.email);
+
                                 Navigator.popUntil(context,
                                     ModalRoute.withName('/welcome_screen'));
                                 Navigator.push(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:not_alone/constants.dart';
 import 'package:not_alone/screens/about_us.dart';
+import 'package:not_alone/screens/contact_list.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -51,7 +52,13 @@ class _AccountPageState extends State<AccountPage> {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  optionsView(Icons.edit, 'Edit My Contacts', () {}),
+                  optionsView(Icons.edit, 'My Contacts', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ContactList()),
+                    );
+                  }),
                   const SizedBox(
                     height: 15.0,
                   ),
