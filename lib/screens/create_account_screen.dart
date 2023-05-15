@@ -91,10 +91,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 await _auth.createUserWithEmailAndPassword(
                                     email: email, password: password);
 
-                                FirebaseFirestore.instance
+                                await FirebaseFirestore.instance
                                     .collection('User')
-                                    .doc(FirebaseAuth
-                                        .instance.currentUser?.email);
+                                    .doc(email)
+                                    .set({
+                                  'myContacts': [],
+                                });
 
                                 Navigator.popUntil(context,
                                     ModalRoute.withName('/welcome_screen'));
@@ -108,6 +110,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   showSpinner = false;
                                 });
                               } catch (e) {
+                                print(e);
                                 print('Oops! Some error occurred.');
                                 setState(() {
                                   showSpinner = false;

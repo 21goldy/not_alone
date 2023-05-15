@@ -17,6 +17,7 @@ class ContactList extends StatefulWidget {
 
 class _ContactListState extends State<ContactList> {
   bool showSpinner = false;
+  TextEditingController addController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class _ContactListState extends State<ContactList> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        controller: addController,
                         onChanged: (value) {
                           number = value;
                         },
@@ -73,6 +75,7 @@ class _ContactListState extends State<ContactList> {
                         title: 'Add',
                         color: Colors.white,
                         onPressed: () {
+                          addController.clear();
                           if (countOfContacts < 3) {
                             setState(() {
                               showSpinner = true;
