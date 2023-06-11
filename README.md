@@ -1,6 +1,7 @@
 # NotALone - Let's Make This World A Beautiful Place To Live
 
-<img src="[http://url/image.png](https://github.com/21goldy/not_alone/assets/64465355/5e6e0cdc-8794-4b82-ad80-eeba1af40578)" height="60" width="60" >
+<img src="[http://url/image.png](https://github.com/21goldy/not_alone/assets/64465355/5e6e0cdc-8794-4b82-ad80-eeba1af40578)" height="200" width="100" >
+
 ![1](https://github.com/21goldy/not_alone/assets/64465355/5e6e0cdc-8794-4b82-ad80-eeba1af40578)
 ![2](https://github.com/21goldy/not_alone/assets/64465355/da8a3306-8d21-42be-a0de-c0f23dc40ade)
 ![3](https://github.com/21goldy/not_alone/assets/64465355/b188e43e-ba7e-4cc7-90c9-21b63a6d5cdd)
