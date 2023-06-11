@@ -6,6 +6,7 @@
 
 <img src="https://github.com/21goldy/not_alone/assets/64465355/b188e43e-ba7e-4cc7-90c9-21b63a6d5cdd" width=30% height=40%>
 
+<br>
 
 <img src="https://github.com/21goldy/not_alone/assets/64465355/0a903d99-5695-4780-bcd0-473bf1a2680d" width=30% height=40%>
 
