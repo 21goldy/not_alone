@@ -1,8 +1,10 @@
-# NotALone - Let's Make This World A Beautiful Place To Live
+# <img src="https://github.com/21goldy/not_alone/assets/64465355/60c14ab9-84ac-41fc-9a9a-ce91b5db702a" width=10% height=10%> 
+NotALone - Let's Make This World A Beautiful Place To Live
 
 This Flutter SOS application is a powerful and user-friendly solution designed to provide immediate assistance in emergency situations. With just one click, users can quickly send their current location to selected contacts, ensuring that help arrives promptly when needed. 
 
-The application offers a seamless and intuitive interface that allows users to effortlessly add and manage their emergency contacts. This feature enables individuals to personalize their support network and share their location with trusted friends, family members, or emergency services personnel. 
+The application offers a seamless and intuitive interface that allows users to effortlessly add and manage their emergency contacts. This feature enables individuals to personalize their support network and share their location with trusted friends, family members, or emergency services personnel. ![NotAlone (2)]
+
 
 In addition to the SOS functionality, our application goes beyond emergency assistance by integrating nearby places and restaurants. This feature is designed to provide users with convenient access to important resources, such as hospitals, police stations, and other emergency services, as well as nearby dining options for added convenience during stressful situations. 
 
