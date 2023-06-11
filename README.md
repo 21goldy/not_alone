@@ -5,7 +5,7 @@
 <img src="https://github.com/21goldy/not_alone/assets/64465355/da8a3306-8d21-42be-a0de-c0f23dc40ade" width=30% height=40%>
 
 <img src="https://github.com/21goldy/not_alone/assets/64465355/b188e43e-ba7e-4cc7-90c9-21b63a6d5cdd" width=30% height=40%>
-
+&nbsp;
 <img src="https://github.com/21goldy/not_alone/assets/64465355/0a903d99-5695-4780-bcd0-473bf1a2680d" width=30% height=40%>
 
 <img src="https://github.com/21goldy/not_alone/assets/64465355/52b9dd80-2e8e-4477-83a3-ac3742f96351" width=30% height=40%>
