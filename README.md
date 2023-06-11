@@ -1,4 +1,4 @@
-# <img src="https://github.com/21goldy/not_alone/assets/64465355/60c14ab9-84ac-41fc-9a9a-ce91b5db702a" width=3% height=2%> NotALone - Let's Make This World A Beautiful Place To Live
+# <img src="https://github.com/21goldy/not_alone/assets/64465355/60c14ab9-84ac-41fc-9a9a-ce91b5db702a" width=3% height=3%> NotALone - Let's Make This World A Beautiful Place To Live
 
 This Flutter SOS application is a powerful and user-friendly solution designed to provide immediate assistance in emergency situations. With just one click, users can quickly send their current location to selected contacts, ensuring that help arrives promptly when needed. 
 
