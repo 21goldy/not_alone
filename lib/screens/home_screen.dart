@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (permissionsGranted == true) {
                             if (isDebug) {
                               telephony.sendSms(
-                                  to: "9893852948",
+                                  to: "1234567890",
                                   message:
                                       "Please Help... This is an emergency! My location https://maps.google.com/maps?q=$latitude,$longitude");
                             } else {
