@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-BoxDecoration kBoxDecoration = BoxDecoration(
+BoxDecoration kBoxDecoration = const BoxDecoration(
     gradient: LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,

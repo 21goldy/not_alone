@@ -19,82 +19,92 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final screenWidth = mediaQuery.size.width;
+
     return Material(
       type: MaterialType.transparency,
-      child: Container(
-        decoration: kBoxDecoration,
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Close the keyboard
+        },
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: Container(
+            decoration: kBoxDecoration,
+            child: Padding(
+              padding: EdgeInsets.all(screenWidth * 0.05), // Responsive padding
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  const Center(
-                    child: Text(
-                      'Reset Password',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Montserrat-Bold',
-                        fontSize: 35,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: screenHeight * 0.2, // Responsive height
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: LoginFields(
-                      formHintText: 'Enter Your Email',
-                      formPrefixIcon: Icons.email,
-                      obscureText: false,
-                      onChanged: (val) {
-                        setState(() {
-                          email = val;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 13,
-                  ),
-                  Center(
-                    child: RoundedButton(
-                        title: 'Send Reset Link',
-                        color: Colors.white,
-                        onPressed: () async {
+                      Center(
+                        child: Text(
+                          'Reset Password',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Montserrat-Bold',
+                            fontSize: screenHeight * 0.045, // Responsive font size
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.1, // Responsive height
+                      ),
+                      LoginFields(
+                        rightPadding: 0,
+                        formHintText: 'Enter Your Email',
+                        formPrefixIcon: Icons.email,
+                        obscureText: false,
+                        onChanged: (val) {
                           setState(() {
-                            showSpinner = true;
+                            email = val;
                           });
-                          try {
-                            await _auth.sendPasswordResetEmail(
-                              email: email,
-                            );
-
-                            // print('sent');
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          } catch (e) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Oops! Some error occurred.'),
-                            ));
-
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
                         },
-                        fontSize: 18.0),
-                  )
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.02, // Responsive height
+                      ),
+                      Center(
+                        child: RoundedButton(
+                            title: 'Send Reset Link',
+                            color: Colors.white,
+                            onPressed: () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                await _auth.sendPasswordResetEmail(
+                                  email: email,
+                                );
+
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              } catch (e) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Oops! Some error occurred.'),
+                                ));
+
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              }
+                            },
+                            fontSize: screenHeight * 0.02, // Responsive font size
+                          ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

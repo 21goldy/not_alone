@@ -23,8 +23,8 @@ dependencies:
   location: ^4.4.0
   geocoding: ^2.0.5
   telephony: ^0.2.0
-  google_maps_flutter: ^2.1.1
-  http: ^0.13.5
+#  google_maps_flutter: ^2.1.1
+#  http: ^0.13.5
 
 
 dev_dependencies:

@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
 class LoginFields extends StatelessWidget {
-  const LoginFields(
-      {Key? key,
-      required this.formHintText,
-      required this.formPrefixIcon,
-      required this.obscureText,
-      required this.onChanged})
-      : super(key: key);
+  const LoginFields({
+    Key? key,
+    required this.formHintText,
+    required this.formPrefixIcon,
+    required this.obscureText,
+    required this.onChanged,
+    this.rightPadding = 20, // Default right padding
+  }) : super(key: key);
 
   final String formHintText;
   final IconData formPrefixIcon;
   final bool obscureText;
   final Function(String) onChanged;
+  final double rightPadding; // New parameter for right padding
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20),
+      padding: EdgeInsets.only(right: rightPadding), // Use rightPadding parameter
       child: TextFormField(
         onChanged: onChanged,
         obscureText: obscureText,

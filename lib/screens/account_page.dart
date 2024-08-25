@@ -20,37 +20,42 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fetching screen size
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final screenWidth = mediaQuery.size.width;
+
     return Material(
       type: MaterialType.transparency,
       child: Container(
         decoration: kBoxDecoration,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: EdgeInsets.only(left: screenWidth * 0.05),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(screenWidth * 0.025),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'NotAlone',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Montserrat-Bold',
-                      fontSize: 50,
+                      fontSize: screenHeight * 0.06, // Adjusted to screen size
                     ),
                   ),
-                  const Text(
+                  Text(
                     'Let\'s Make this world a better place to live!',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Ubuntu',
-                      fontSize: 13,
+                      fontSize: screenHeight * 0.018, // Adjusted to screen size
                     ),
                   ),
-                  const SizedBox(
-                    height: 50.0,
+                  SizedBox(
+                    height: screenHeight * 0.06, // Adjusted to screen size
                   ),
                   optionsView(Icons.edit, 'My Contacts', () {
                     Navigator.push(
@@ -58,18 +63,18 @@ class _AccountPageState extends State<AccountPage> {
                       MaterialPageRoute(
                           builder: (context) => const ContactList()),
                     );
-                  }),
-                  const SizedBox(
-                    height: 15.0,
+                  }, screenHeight, screenWidth),
+                  SizedBox(
+                    height: screenHeight * 0.02, // Adjusted to screen size
                   ),
                   optionsView(Icons.adb_sharp, 'About Us', () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const AboutUs()),
                     );
-                  }),
-                  const SizedBox(
-                    height: 15.0,
+                  }, screenHeight, screenWidth),
+                  SizedBox(
+                    height: screenHeight * 0.02, // Adjusted to screen size
                   ),
                   optionsView(Icons.logout, 'Log Out', () {
                     signOut().then((value) async {
@@ -77,7 +82,7 @@ class _AccountPageState extends State<AccountPage> {
                     });
                     SystemChannels.platform
                         .invokeMethod<void>('SystemNavigator.pop');
-                  }),
+                  }, screenHeight, screenWidth),
                 ],
               ),
             ),
@@ -87,25 +92,25 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  InkWell optionsView(IconData icon, String text, VoidCallback onTap) {
+  InkWell optionsView(IconData icon, String text, VoidCallback onTap, screenHeight, screenWidth) {
     return InkWell(
       onTap: onTap,
       child: Row(
         children: [
           Icon(
             icon,
-            size: 18,
+            size: screenHeight * 0.025, // Adjusted to screen size
             color: Colors.white,
           ),
-          const SizedBox(
-            width: 10.0,
+          SizedBox(
+            width: screenWidth * 0.03, // Adjusted to screen size
           ),
           Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontFamily: 'Ubuntu',
-              fontSize: 18,
+              fontSize: screenHeight * 0.025, // Adjusted to screen size
             ),
           ),
         ],

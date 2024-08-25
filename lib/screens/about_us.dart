@@ -11,15 +11,20 @@ class AboutUs extends StatefulWidget {
 class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
+    // Fetching screen size
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final screenWidth = mediaQuery.size.width;
+
     return Material(
       type: MaterialType.transparency,
       child: Container(
         decoration: kBoxDecoration,
-        child: const Padding(
-          padding: EdgeInsets.only(left: 20),
+        child: Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.05),
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(screenWidth * 0.025),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -29,26 +34,31 @@ class _AboutUsState extends State<AboutUs> {
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Montserrat-Bold',
-                      fontSize: 50,
+                      fontSize: screenHeight * 0.06, // Adjusted to screen size
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: screenHeight * 0.03, // Adjusted to screen size
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(screenWidth * 0.02), // Adjusted to screen size
                     child: Text(
-                      'We are Team NotAlone. We aim to give the freedom to every person to travel safe. Our aim is to help people share there live location to the nearby restaurants/places to assist the needy with the earliest help!\n',
-                      style: TextStyle(color: Colors.white),
+                      'NotAlone aims to give every person the freedom to travel safe. You can share your live location with your contacts in one click. Let\'s make this world a better place to live!\n',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenHeight * 0.018, // Adjusted to screen size
+                      ),
                     ),
                   ),
-                  Text(
-                    'Made by, \n',
-                    style: TextStyle(color: Colors.white),
+                  SizedBox(
+                    height: screenHeight * 0.04, // Adjusted to screen size
                   ),
                   Text(
-                    '20BAI10069	RIYA SHARMA\n20BAI10188	NAYAN PANDA\n20BCE10093	ANANYA PRASAD\n20BCE10529	JAYESH MEHTA\n20BCY10155	GOLDY GOUR\n20BCY10179	SMARANI BASU\n20MIM10061	SHAGUN SRIVASTAV\n20MIM10069	SNEHA PRASAD',
-                    style: TextStyle(color: Colors.white),
+                    'Made with ❤ by Goldy!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenHeight * 0.018, // Adjusted to screen size
+                    ),
                   ),
                 ],
               ),
